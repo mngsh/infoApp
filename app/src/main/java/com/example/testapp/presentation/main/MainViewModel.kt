@@ -7,6 +7,10 @@ import com.example.testapp.domain.usecase.GetPeopleUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+
+//как дальше реализовать паттерн mvvm?
+//нужно в main фрагмент передать данные для ресайклур вью
+
 class MainViewModel(private val useCase: GetPeopleUseCase): ViewModel() {
 
     init {
