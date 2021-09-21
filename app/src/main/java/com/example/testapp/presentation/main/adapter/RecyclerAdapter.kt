@@ -8,18 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.R
 import com.example.testapp.data.vo.PeopleVo
 
-class RecyclerAdapter(private val peopleVoList: List<PeopleVo>) :
+class RecyclerAdapter(private val onClickListener: ItemClickListener) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val firstName: TextView
-        val lastName: TextView
-
-        init {
-            firstName = view.findViewById(R.id.item_first_name)
-            lastName = view.findViewById(R.id.item_last_name)
-        }
-    }
+    private var item: List<PeopleVo> = emptyList()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
@@ -29,10 +21,30 @@ class RecyclerAdapter(private val peopleVoList: List<PeopleVo>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.firstName.text = peopleVoList[position].firstName
-        viewHolder.lastName.text = peopleVoList[position].lastName
+        viewHolder.lastName.text = item[position].lastName
+        viewHolder.firstName.text = item[position].firstName
+        viewHolder.firstName.setOnClickListener {
+            onClickListener.onClicked(item[position].id)
+        }
     }
 
-    override fun getItemCount(): Int = peopleVoList.size
+    override fun getItemCount(): Int = item.size
+
+    fun update(list: List<PeopleVo>) {
+        item = list
+        notifyDataSetChanged()
+    }
+
+    class ViewHolder(view: View) :
+        RecyclerView.ViewHolder(view) {
+
+        val firstName: TextView
+        val lastName: TextView
+
+        init {
+            firstName = view.findViewById(R.id.item_first_name)
+            lastName = view.findViewById(R.id.item_last_name)
+        }
+    }
 
 }
