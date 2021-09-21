@@ -24,8 +24,8 @@ class MainViewModel(private val useCase: GetPeopleUseCase): ViewModel() {
         disposable.addAll(useCase.getAllPeopleList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ it ->
-                peopleListLiveData.postValue(it.toList())
+            .subscribe({ people ->
+                peopleListLiveData.postValue(people.toList())
             }, { error ->
                 errorLiveData.postValue(error.message)
             }))
